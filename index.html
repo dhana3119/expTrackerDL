@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kharcha — Expense Tracker</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,400;0,600;1,300&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+<!-- ── HEADER ── -->
+<header class="header">
+  <div class="header__top">
+    <div>
+      <p class="header__eyebrow">Your spending</p>
+      <h1 class="header__logo">Kharcha</h1>
+    </div>
+    <button class="add-fab" id="openModal" aria-label="Add expense">
+      <span>+</span>
+    </button>
+  </div>
+
+  <!-- Month total pill -->
+  <div class="header__total">
+    <span class="header__total-label">This month</span>
+    <span class="header__total-amount" id="monthTotal">₹0</span>
+  </div>
+</header>
+
+<!-- ── TABS ── -->
+<nav class="tabs">
+  <button class="tab tab--active" data-tab="daily">Daily</button>
+  <button class="tab" data-tab="monthly">Monthly</button>
+  <button class="tab" data-tab="category">Category</button>
+</nav>
+
+<!-- ══ DAILY VIEW ══ -->
+<div class="tab-panel" id="tab-daily">
+  <div class="date-nav">
+    <button class="date-nav__btn" id="prevDay">‹</button>
+    <div>
+      <p class="date-nav__date" id="selectedDateLabel">Today</p>
+      <p class="date-nav__sub" id="selectedDateFull"></p>
+    </div>
+    <button class="date-nav__btn" id="nextDay">›</button>
+  </div>
+
+  <div class="day-total-card">
+    <span class="day-total__label">Day total</span>
+    <span class="day-total__amount" id="dayTotal">₹0</span>
+  </div>
+
+  <ul class="expense-list" id="dailyList"></ul>
+  <p class="empty-msg hidden" id="emptyDaily">No expenses on this day.</p>
+</div>
+
+<!-- ══ MONTHLY VIEW ══ -->
+<div class="tab-panel hidden" id="tab-monthly">
+  <div class="month-picker-row">
+    <button class="date-nav__btn" id="prevMonth">‹</button>
+    <p class="month-label" id="monthLabel">April 2026</p>
+    <button class="date-nav__btn" id="nextMonth">›</button>
+  </div>
+
+  <div class="summary-strip" id="monthlySummaryStrip"></div>
+
+  <!-- Day-by-day breakdown -->
+  <div class="section-heading">Day-by-day</div>
+  <ul class="day-breakdown" id="dayBreakdownList"></ul>
+  <p class="empty-msg hidden" id="emptyMonthly">No expenses this month.</p>
+</div>
+
+<!-- ══ CATEGORY VIEW ══ -->
+<div class="tab-panel hidden" id="tab-category">
+  <div class="month-picker-row">
+    <button class="date-nav__btn" id="prevCatMonth">‹</button>
+    <p class="month-label" id="catMonthLabel">April 2026</p>
+    <button class="date-nav__btn" id="nextCatMonth">›</button>
+  </div>
+
+  <div class="cat-grid" id="categoryGrid"></div>
+  <p class="empty-msg hidden" id="emptyCat">No expenses this month.</p>
+
+  <div class="section-heading" id="catDetailHeading" style="display:none"></div>
+  <ul class="expense-list" id="catDetailList"></ul>
+</div>
+
+<!-- ══ ADD EXPENSE MODAL ══ -->
+<div class="modal-overlay hidden" id="modal">
+  <div class="modal">
+    <div class="modal__handle"></div>
+    <h2 class="modal__title">Add Expense</h2>
+
+    <div class="form-group">
+      <label class="form-label">Date</label>
+      <input type="date" id="txnDate" class="form-input" />
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Category</label>
+      <select id="category" class="form-input">
+        <option value="">— Choose —</option>
+        <option value="food">🛒 Food & Dining</option>
+        <option value="transport">🚌 Transport</option>
+        <option value="health">💊 Health & Medical</option>
+        <option value="entertainment">🎬 Entertainment</option>
+        <option value="shopping">🛍️ Shopping</option>
+        <option value="utilities">💡 Utilities & Bills</option>
+        <option value="rent">🏠 Rent & Housing</option>
+        <option value="education">📚 Education</option>
+        <option value="groceries">🥦 Groceries</option>
+        <option value="other">📌 Other</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Description</label>
+      <input type="text" id="description" class="form-input" placeholder="e.g. Lunch at Murugan Idli" maxlength="80" />
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Amount (₹)</label>
+      <div class="amount-wrap">
+        <span class="amount-prefix">₹</span>
+        <input type="number" id="amount" class="form-input form-input--amount" placeholder="0" min="1" step="1" />
+      </div>
+    </div>
+
+    <button class="submit-btn" id="submitTxn">Save Expense</button>
+  </div>
+</div>
+
+<script src="db.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
