@@ -17,15 +17,11 @@
       <p class="header__eyebrow">Your spending</p>
       <h1 class="header__logo">EDL</h1>
     </div>
-    <button class="add-fab" id="openModal" aria-label="Add expense">
-      <span>+</span>
-    </button>
+    <button class="add-fab" id="openModal" aria-label="Add expense">+</button>
   </div>
-
-  <!-- Month total pill -->
   <div class="header__total">
     <span class="header__total-label">This month</span>
-    <span class="header__total-amount" id="monthTotal">₹0</span>
+    <span class="header__total-amount" id="monthTotal">&#8377;0</span>
   </div>
 </header>
 
@@ -39,17 +35,17 @@
 <!-- ══ DAILY VIEW ══ -->
 <div class="tab-panel" id="tab-daily">
   <div class="date-nav">
-    <button class="date-nav__btn" id="prevDay">‹</button>
-    <div>
+    <button class="date-nav__btn" id="prevDay" aria-label="Previous day">&#8592;</button>
+    <div class="date-nav__center">
       <p class="date-nav__date" id="selectedDateLabel">Today</p>
       <p class="date-nav__sub" id="selectedDateFull"></p>
     </div>
-    <button class="date-nav__btn" id="nextDay">›</button>
+    <button class="date-nav__btn" id="nextDay" aria-label="Next day">&#8594;</button>
   </div>
 
   <div class="day-total-card">
     <span class="day-total__label">Day total</span>
-    <span class="day-total__amount" id="dayTotal">₹0</span>
+    <span class="day-total__amount" id="dayTotal">&#8377;0</span>
   </div>
 
   <ul class="expense-list" id="dailyList"></ul>
@@ -59,14 +55,12 @@
 <!-- ══ MONTHLY VIEW ══ -->
 <div class="tab-panel hidden" id="tab-monthly">
   <div class="month-picker-row">
-    <button class="date-nav__btn" id="prevMonth">‹</button>
+    <button class="date-nav__btn" id="prevMonth" aria-label="Previous month">&#8592;</button>
     <p class="month-label" id="monthLabel">April 2026</p>
-    <button class="date-nav__btn" id="nextMonth">›</button>
+    <button class="date-nav__btn" id="nextMonth" aria-label="Next month">&#8594;</button>
   </div>
 
   <div class="summary-strip" id="monthlySummaryStrip"></div>
-
-  <!-- Day-by-day breakdown -->
   <div class="section-heading">Day-by-day</div>
   <ul class="day-breakdown" id="dayBreakdownList"></ul>
   <p class="empty-msg hidden" id="emptyMonthly">No expenses this month.</p>
@@ -75,15 +69,14 @@
 <!-- ══ CATEGORY VIEW ══ -->
 <div class="tab-panel hidden" id="tab-category">
   <div class="month-picker-row">
-    <button class="date-nav__btn" id="prevCatMonth">‹</button>
+    <button class="date-nav__btn" id="prevCatMonth" aria-label="Previous month">&#8592;</button>
     <p class="month-label" id="catMonthLabel">April 2026</p>
-    <button class="date-nav__btn" id="nextCatMonth">›</button>
+    <button class="date-nav__btn" id="nextCatMonth" aria-label="Next month">&#8594;</button>
   </div>
 
   <div class="cat-grid" id="categoryGrid"></div>
   <p class="empty-msg hidden" id="emptyCat">No expenses this month.</p>
-
-  <div class="section-heading" id="catDetailHeading" style="display:none"></div>
+  <div class="section-heading hidden" id="catDetailHeading"></div>
   <ul class="expense-list" id="catDetailList"></ul>
 </div>
 
@@ -97,39 +90,77 @@
       <label class="form-label">Date</label>
       <input type="date" id="txnDate" class="form-input" />
     </div>
-
     <div class="form-group">
       <label class="form-label">Category</label>
       <select id="category" class="form-input">
         <option value="">— Choose —</option>
-        <option value="food">🛒 Food & Dining</option>
-        <option value="transport">🚌 Transport</option>
-        <option value="shopping">🛍️ Shopping</option>
-        <option value="shopping">🛍️ Accessories</option>
-        <option value="education">📚 Education</option>
-        <option value="groceries">🥦 Groceries</option>
-        <option value="entertainment">🎬 Entertainment</option>
-        <option value="health">💊 Health & Medical</option>
-        <option value="utilities">💡 Utilities & Bills</option>
-        <option value="rent">🏠 Rent & Housing</option>
-        <option value="other">📌 Other</option>
+        <option value="food">Food &amp; Dining</option>
+        <option value="transport">Transport</option>
+        <option value="health">Health &amp; Medical</option>
+        <option value="entertainment">Entertainment</option>
+        <option value="shopping">Shopping</option>
+        <option value="utilities">Utilities &amp; Bills</option>
+        <option value="rent">Rent &amp; Housing</option>
+        <option value="education">Education</option>
+        <option value="groceries">Groceries</option>
+        <option value="other">Other</option>
       </select>
     </div>
-
     <div class="form-group">
       <label class="form-label">Description</label>
       <input type="text" id="description" class="form-input" placeholder="e.g. Lunch at Murugan Idli" maxlength="80" />
     </div>
-
     <div class="form-group">
-      <label class="form-label">Amount (₹)</label>
+      <label class="form-label">Amount (&#8377;)</label>
       <div class="amount-wrap">
-        <span class="amount-prefix">₹</span>
+        <span class="amount-prefix">&#8377;</span>
         <input type="number" id="amount" class="form-input form-input--amount" placeholder="0" min="1" step="1" />
       </div>
     </div>
-
     <button class="submit-btn" id="submitTxn">Save Expense</button>
+  </div>
+</div>
+
+<!-- ══ EDIT EXPENSE MODAL ══ -->
+<div class="modal-overlay hidden" id="editModal">
+  <div class="modal">
+    <div class="modal__handle"></div>
+    <h2 class="modal__title">Edit Expense</h2>
+    <input type="hidden" id="editId" />
+
+    <div class="form-group">
+      <label class="form-label">Date</label>
+      <input type="date" id="editDate" class="form-input" />
+    </div>
+    <div class="form-group">
+      <label class="form-label">Category</label>
+      <select id="editCategory" class="form-input">
+        <option value="">— Choose —</option>
+        <option value="food">Food &amp; Dining</option>
+        <option value="transport">Transport</option>
+        <option value="health">Health &amp; Medical</option>
+        <option value="entertainment">Entertainment</option>
+        <option value="shopping">Shopping</option>
+        <option value="utilities">Utilities &amp; Bills</option>
+        <option value="rent">Rent &amp; Housing</option>
+        <option value="education">Education</option>
+        <option value="groceries">Groceries</option>
+        <option value="other">Other</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Description</label>
+      <input type="text" id="editDescription" class="form-input" placeholder="e.g. Lunch at Murugan Idli" maxlength="80" />
+    </div>
+    <div class="form-group">
+      <label class="form-label">Amount (&#8377;)</label>
+      <div class="amount-wrap">
+        <span class="amount-prefix">&#8377;</span>
+        <input type="number" id="editAmount" class="form-input form-input--amount" placeholder="0" min="1" step="1" />
+      </div>
+    </div>
+    <button class="submit-btn" id="saveEdit">Update Expense</button>
+    <button class="delete-btn" id="deleteFromEdit">Delete this Expense</button>
   </div>
 </div>
 
